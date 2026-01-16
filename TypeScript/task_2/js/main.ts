@@ -46,7 +46,7 @@ console.log(createEmployee(200));
 console.log(createEmployee(1000));
 console.log(createEmployee('$500'));
 
-function isDirector(employee: Director | Teacher): employee is Director {
+function isDirector(employee: Director | Teacher): employee is Director { // a type predicate
     return employee instanceof Director;
 }
 
@@ -61,3 +61,13 @@ executeWork(createEmployee(200));
 executeWork(createEmployee(1000));
 console.log(executeWork(createEmployee(200)));
 console.log(executeWork(createEmployee(1000)));
+
+type Subjects = 'Math' | 'History'; // a string literal types
+function teachClass(todayClass: Subjects): string {
+    if (todayClass === 'Math') {
+        return 'Teaching Math';
+    }
+    return 'Teaching History';
+}
+console.log(teachClass('Math'));
+console.log(teachClass('History'));
