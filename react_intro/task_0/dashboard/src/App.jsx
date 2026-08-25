@@ -16,7 +16,7 @@ function App() {
 
       <div className='App-footer'>
         <p>
-          Copyright {new Date().getFullYear()} - holberton School
+          Copyright {new Date().getFullYear()} - Holberton School
         </p>
       </div>
     </div>
