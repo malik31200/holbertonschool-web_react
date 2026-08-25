@@ -11,7 +11,7 @@ test('check the existence of the notifications title', () => {
 test('check the existence of the button elemente', () => {
     render(<Notifications />);
 
-    expect(screen.getByRole('button')
+    expect(screen.getByRole('button', { name: /close/i })
     ).toBeInTheDocument();
 });
 
@@ -27,7 +27,7 @@ test('logs a message when the close button is clicked', () => {
 
    const consoleSpy = jest.spyOn(console, 'log');
 
-   fireEvent.click(screen.getByRole('button'));
+   fireEvent.click(screen.getByRole('button', { name: /close/i }));
 
    expect(consoleSpy).toHaveBeenCalledWith(
     'Close button has been clicked'
