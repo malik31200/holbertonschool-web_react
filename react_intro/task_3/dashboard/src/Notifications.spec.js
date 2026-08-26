@@ -1,52 +1,37 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Notifications from './Notifications';
+import Notifications from './Notifications.jsx';
 
-test('Renders the notifications title', () => {
-  render(<Notifications />);
+test('check the existence of the notifications title', () => {
+    render(<Notifications />);
 
-  const titleElement = screen.getByText(
-    /here is the list of notifications/i
-  );
-
-  expect(titleElement).toBeInTheDocument();
+    expect(screen.getByText(/Here is the list of notifications/i)
+    ).toBeInTheDocument();
 });
 
-test('Renders the close button', () => {
-  render(<Notifications />);
+test('check the existence of the button elemente', () => {
+    render(<Notifications />);
 
-  const closeButton = screen.getByRole(
-    'button',
-    { name: /close/i }
-  );
-
-  expect(closeButton).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /close/i })
+    ).toBeInTheDocument();
 });
 
-test('Renders three list items', () => {
-  render(<Notifications />);
+test('renders 3 li elements', () => {
+    render(<Notifications />);
 
-  const listItems = screen.getAllByRole('listitem');
-
-  expect(listItems).toHaveLength(3);
+    expect(screen.getAllByRole('listitem')
+    ).toHaveLength(3);
 });
 
-test('Logs message when close button is clicked', () => {
-  const consoleLog = jest
-    .spyOn(console, 'log')
-    .mockImplementation();
+test('logs a message when the close button is clicked', () => {
+    render(<Notifications />);
 
-  render(<Notifications />);
+   const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
-  const closeButton = screen.getByRole(
-    'button',
-    { name: /close/i }
-  );
+   fireEvent.click(screen.getByRole('button', { name: /close/i }));
 
-  fireEvent.click(closeButton);
-
-  expect(consoleLog).toHaveBeenCalledWith(
+   expect(consoleSpy).toHaveBeenCalledWith(
     'Close button has been clicked'
-  );
+   );
 
-  consoleLog.mockRestore();
+   consoleSpy.mockRestore();
 });
