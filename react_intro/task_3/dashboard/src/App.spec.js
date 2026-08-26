@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import App from './App.jsx';
 
 test('renders 2 input elements', () => {
-    render(<App />);
+    render(<    App />);
 
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();

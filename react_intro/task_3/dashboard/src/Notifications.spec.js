@@ -25,7 +25,7 @@ test('renders 3 li elements', () => {
 test('logs a message when the close button is clicked', () => {
     render(<Notifications />);
 
-   const consoleSpy = jest.spyOn(console, 'log');
+   const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
    fireEvent.click(screen.getByRole('button', { name: /close/i }));
 
