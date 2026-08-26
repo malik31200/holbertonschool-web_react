@@ -31,7 +31,9 @@ test('Renders three list items', () => {
 });
 
 test('Logs message when close button is clicked', () => {
-  const consoleLog = jest.spyOn(console, 'log').mockImplementation();
+  const consoleLog = jest
+    .spyOn(console, 'log')
+    .mockImplementation();
 
   render(<Notifications />);
 
