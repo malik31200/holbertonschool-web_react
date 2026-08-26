@@ -2,3 +2,5 @@ node_modules/
 *.log
 task_0/dist/main.js
 task_1/public/bundle.js
+task_2/public/bundle.js
+task_3/public/

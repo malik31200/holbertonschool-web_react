@@ -1,0 +1,11 @@
+.App-login {
+  flex: 1;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.App-login p {
+  margin: 0;
+  color: #2d2d2d;
+  font-size: 16px;
+}
