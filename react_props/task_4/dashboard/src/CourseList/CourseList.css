@@ -1,0 +1,38 @@
+#CourseList {
+	width: 93%;
+	margin: 53px auto 160px;
+	border-collapse: collapse;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 11px;
+	color: #111;
+}
+
+#CourseList th,
+#CourseList td {
+	height: 13px;
+	padding: 0 2px;
+	border: 1px solid #b7b7b7;
+	line-height: 13px;
+	text-align: left;
+	font-weight: 400;
+}
+
+#CourseList thead tr:first-child th {
+	text-align: center;
+	font-weight: 700;
+}
+
+#CourseList thead tr:nth-child(2) th {
+	text-align: center;
+	font-weight: 700;
+}
+
+#CourseList th:first-child,
+#CourseList td:first-child {
+	width: 67%;
+}
+
+#CourseList th:last-child,
+#CourseList td:last-child {
+	width: 33%;
+}
