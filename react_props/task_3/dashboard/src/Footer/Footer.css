@@ -1,0 +1,15 @@
+.App-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90px;
+  border-top: 3px solid #e1003c;
+  box-sizing: border-box;
+}
+
+.App-footer p {
+  margin: 0;
+  font-size: 16px;
+  color: #2d2d2d;
+  font-style: italic;
+}
