@@ -1,0 +1,27 @@
+.notification-items {
+  border: 2px dotted #e1003c;
+  margin: 10px 20px;
+  padding: 5px 8px;
+  box-sizing: border-box;
+}
+
+.notification-items p {
+  margin: 0;
+  font-size: 10px;
+}
+
+.notification-items button {
+  float: right;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.notification-items button img {
+  width: 10px;
+  height: 10px;
+}
+
+.notification-items ul {
+  padding-left: 20px;
+}

@@ -1,0 +1,35 @@
+.App-login {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.App-login p {
+  margin: 0 0 20px;
+  color: #2d2d2d;
+  font-size: 12px;
+}
+
+.App-login label {
+  color: #2d2d2d;
+  font-size: 10px;
+  margin-right: 5px;
+}
+
+.App-login input {
+  width: 85px;
+  height: 12px;
+  padding: 0 2px;
+  margin-right: 5px;
+  border: 1px solid #c8c8c8;
+  box-sizing: border-box;
+}
+
+.App-login button {
+  padding: 1px 4px;
+  border: 1px solid #c8c8c8;
+  border-radius: 2px;
+  color: #555;
+  background-color: #eee;
+  font-size: 8px;
+}
