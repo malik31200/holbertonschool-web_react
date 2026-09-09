@@ -1,19 +1,14 @@
-import React from "react";
+import React from 'react';
 
 class NotificationItem extends React.Component {
     render() {
-        const { id, type, html, value, markAsRead } = this.props;
-
-        if (html) {
-            return (
-                <li
-                    data-notification-type={type}
-                    style={{ color: type === 'default' ? 'blue' : 'red' }}
-                    dangerouslySetInnerHTML={html}
-                    onClick={() => markAsRead(id)}
-                />
-            );
-        }
+        const {
+            id,
+            type,
+            html,
+            value,
+            markAsRead,
+        } = this.props;
 
         return (
             <li
@@ -21,7 +16,11 @@ class NotificationItem extends React.Component {
                 style={{ color: type === 'default' ? 'blue' : 'red' }}
                 onClick={() => markAsRead(id)}
             >
-                {value}
+                {html ? (
+                    <span dangerouslySetInnerHTML={html} />
+                ) : (
+                    value
+                )}
             </li>
         );
     }
