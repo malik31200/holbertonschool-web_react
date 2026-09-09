@@ -10,17 +10,24 @@ class NotificationItem extends React.Component {
             markAsRead,
         } = this.props;
 
+        if (html) {
+            return (
+                <li
+                    data-notification-type={type}
+                    style={{ color: type === 'default' ? 'blue' : 'red' }}
+                    dangerouslySetInnerHTML={html}
+                    onClick={() => markAsRead(id)}
+                />
+            );
+        }
+
         return (
             <li
                 data-notification-type={type}
                 style={{ color: type === 'default' ? 'blue' : 'red' }}
                 onClick={() => markAsRead(id)}
             >
-                {html ? (
-                    <span dangerouslySetInnerHTML={html} />
-                ) : (
-                    value
-                )}
+                {value}
             </li>
         );
     }
