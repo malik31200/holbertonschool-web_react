@@ -1,7 +1,8 @@
-import react from 'react';
+import React from 'react';
 import './Notifications.css';
 import NotificationItem  from './NotificationItem';
 import closeIcon from '../assets/close-button.png';
+
 
 class Notifications extends React.Component {
     markAsRead = (id) => {
