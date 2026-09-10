@@ -79,3 +79,15 @@ test('calls logOut when ctrl+h is pressed', () => {
 
   expect(logOut).toHaveBeenCalledTimes(1);
 });
+
+test('displays the school news by default', () => {
+    render(<App />);
+
+    expect(
+        screen.getByRole('heading', { name: /News from the School/i }),
+    ).toBeInTheDocument();
+
+    expect(
+        screen.getByText(/Holberton School News goes here/i),
+    ).toBeInTheDocument();
+});

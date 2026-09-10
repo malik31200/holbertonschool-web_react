@@ -5,6 +5,8 @@ import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
 import './App.css';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+import BodySection from '../BodySection/BodySection';
 
 class App extends React.Component {
   constructor(props) {
@@ -66,7 +68,7 @@ class App extends React.Component {
   }
 
   render () {
-    const {isLoggedIn = false} = this.props;
+    const {isLoggedIn = true} = this.props;
 
     return (
       <div className='App'>
@@ -76,10 +78,18 @@ class App extends React.Component {
           <Header />
 
           {isLoggedIn ? (
-            <CourseList courses={this.coursesList}/>
+            <BodySectionWithMarginBottom title="Course list">
+              <CourseList courses={this.coursesList}/>
+            </BodySectionWithMarginBottom>
           ) : (
-            <Login />
+            <BodySectionWithMarginBottom title="Log in to continue">
+              <Login />
+            </BodySectionWithMarginBottom>
           )}
+
+          <BodySection title="News from the School">
+            <p>Holberton School News goes here</p>
+          </BodySection>
 
           <Footer />
         </Fragment>
