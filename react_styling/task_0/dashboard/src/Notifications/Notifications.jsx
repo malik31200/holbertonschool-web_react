@@ -38,9 +38,7 @@ class Notifications extends React.Component {
                         </button>
 
                         <p>
-                            {notifications.length === 0
-                                ? 'No new notification for now'
-                                : 'Here is the list of notifications'}
+                          Here is the list of notifications
                         </p>
 
                         <ul>
