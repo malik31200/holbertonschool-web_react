@@ -1,51 +1,52 @@
 @import "tailwindcss";
 
 @theme {
-    --font-roboto: "Roboto", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
 }
 
 @layer base {
-    :root {
-        --color-table-header: #deb5b5;
-        --color-table-rows: #CDCDCD;
-    }
-    html {
-        font-family: "Roboto", sans-serif;
-    }
+  :root {
+    --color-table-header: #deb5b5;
+    --color-table-rows: #CDCDCD;
+  }
+
+  html {
+    font-family: "Roboto", sans-serif;
+  }
 }
 
 .course-list-container {
-    width: 80%;
-    margin: 53px auto 160px;
+  width: 80%;
+  margin: 53px auto 160px;
 }
 
 #CourseList {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 11px;
-    color: #111;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  color: #111;
 }
 
 #CourseList th,
 #CourseList td {
-    height: 13px;
-    line-height: 13px;
-    text-align: left;
-    font-weight: 400;
+  height: 13px;
+  line-height: 13px;
+  text-align: left;
+  font-weight: 400;
 }
 
 #CourseList thead tr:first-child th,
 #CourseList thead tr:nth-child(2) th {
-    text-align: center;
-    font-weight: 700;
+  text-align: center;
+  font-weight: 700;
 }
 
 #CourseList th:first-child,
 #CourseList td:first-child {
-    width: 67%;
+  width: 67%;
 }
 
 #CourseList th:last-child,
 #CourseList td:last-child {
-    width: 33%;
+  width: 33%;
 }
