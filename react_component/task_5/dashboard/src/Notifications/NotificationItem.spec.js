@@ -138,3 +138,56 @@ test('logs when a notification is clicked', () => {
 
     consoleSpy.mockRestore();
 });
+
+test('does not re-render when notifications length stays the same', () => {
+    const notifications = [
+        { id: 1, type: 'default', value: 'Notification 1' },
+        { id: 2, type: 'urgent', value: 'Notification 2' },
+    ];
+
+    const { rerender } = render(
+        <Notifications
+            notifications={notifications}
+            displayDrawer={true}
+        />,
+    );
+
+    const firstItem = screen.getByText('Notification 1');
+
+    rerender(
+        <Notifications
+            notifications={[
+                { id: 3, type: 'default', value: 'New notification' },
+                { id: 4, type: 'urgent', value: 'Another notification' },
+            ]}
+            displayDrawer={true}
+        />,
+    );
+
+    expect(screen.getByText('Notification 1')).toBe(firstItem);
+});
+
+test('re-renders when notifications length changes', () => {
+    const notifications = [
+        { id: 1, type: 'default', value: 'Notification 1' },
+    ];
+
+    const { rerender } = render(
+        <Notifications
+            notifications={notifications}
+            displayDrawer={true}
+        />,
+    );
+
+    rerender(
+        <Notifications
+            notifications={[
+                { id: 1, type: 'default', value: 'Notification 1' },
+                { id: 2, type: 'urgent', value: 'Notification 2' },
+            ]}
+            displayDrawer={true}
+        />,
+    );
+
+    expect(screen.getByText('Notification 2')).toBeInTheDocument();
+});

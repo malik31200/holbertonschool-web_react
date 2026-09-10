@@ -7,11 +7,15 @@ import closeIcon from '../assets/close-button.png';
 class Notifications extends React.Component {
     markAsRead = (id) => {
         console.log(`Notification ${id} has been marked as read`)
+    };
+
+    shouldComponentUpdate(nextProps) {
+        return nextProps.notifications.length !== this.props.notifications.length;
     }
     render() {
         const {
             notifications = [],
-            displayDrawer = true,
+            displayDrawer = false,
         } = this.props;
         return (
             <>
