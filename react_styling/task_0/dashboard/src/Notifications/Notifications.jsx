@@ -15,7 +15,7 @@ class Notifications extends React.Component {
     render() {
         const {
             notifications = [],
-            displayDrawer = false,
+            displayDrawer = true,
         } = this.props;
         return (
             <>
