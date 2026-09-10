@@ -2,14 +2,11 @@
 
 @theme {
   --font-roboto: "Roboto", sans-serif;
+  --color-table-header: #deb5b5;
+  --color-table-rows: #CDCDCD;
 }
 
 @layer base {
-  :root {
-    --color-table-header: #deb5b5;
-    --color-table-rows: #CDCDCD;
-  }
-
   html {
     font-family: "Roboto", sans-serif;
   }
