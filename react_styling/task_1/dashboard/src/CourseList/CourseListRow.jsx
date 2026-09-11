@@ -7,7 +7,7 @@ function CourseListRow({
 
   if (isHeaderRow) {
     return (
-      <tr className="bg-table-header opacity-.66">
+      <tr className="bg-table-header opacity-[66%]">
         {textSecondCell === null ? (
           <th className="border border-gray-400" colSpan="2">
             {textFirstCell}
