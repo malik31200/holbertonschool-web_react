@@ -68,7 +68,7 @@ class App extends React.Component {
   }
 
   render () {
-    const {isLoggedIn = true} = this.props;
+    const {isLoggedIn = false} = this.props;
 
     return (
       <div className='App'>
