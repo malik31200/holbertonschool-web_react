@@ -9,6 +9,6 @@ import './main.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <App isLoggedIn={true} />
   </StrictMode>
 );
