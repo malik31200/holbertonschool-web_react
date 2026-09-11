@@ -12,8 +12,8 @@ class NotificationItem extends React.PureComponent {
 
         const colorClass =
             type === 'default'
-                ? 'text-default-notification-item'
-                : 'text-urgent-notification-item';
+                ? 'text-[var(--default-notification-item)]'
+                : 'text-[var(--urgent-notification-item)]';
 
         if (html) {
             return (
