@@ -2,9 +2,20 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Notifications from './Notifications.jsx';
 
 test('check the existence of the notifications title', () => {
-    render(<Notifications />);
+    render(
+        <Notifications
+            notifications={[
+                {
+                    id: 1,
+                    type: 'default',
+                    value: 'New course available',
+                },
+            ]}
+        />
+    );
 
-    expect(screen.getByText(/Here is the list of notifications/i)
+    expect(
+        screen.getByText(/Here is the list of notifications/i)
     ).toBeInTheDocument();
 });
 
