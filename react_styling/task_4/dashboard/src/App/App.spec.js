@@ -88,6 +88,6 @@ test('displays the school news by default', () => {
     ).toBeInTheDocument();
 
     expect(
-        screen.getByText(/Holberton School News goes here/i),
+        screen.getByText(/Lorem ipsum dolor sit amet consectetur/i),
     ).toBeInTheDocument();
 });
