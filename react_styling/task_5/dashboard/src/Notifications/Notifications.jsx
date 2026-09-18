@@ -23,7 +23,7 @@ class Notifications extends React.Component {
 
         return (
             <>
-                <div className={`text-right ${shouldBounce ? 'animate-bounce' : ''}`}>
+                <div className={`text-right notification-title ${shouldBounce ? 'animate-bounce' : ''}`}>
                     Your notifications
                 </div>
 
