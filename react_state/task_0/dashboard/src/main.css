@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+  --color-table-header: #deb5b5;
+  --color-table-rows: #CDCDCD;
+
+  --main-color: #e1003c;
+  --default-notification-item: blue;
+  --urgent-notification-item: red;
+}
+
+@layer base {
+  html {
+    font-family: "Roboto", sans-serif;
+  }
+}
+
+.course-list-container {
+  width: 80vw;
+  margin: 53px auto 160px;
+}
+
+#CourseList {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  color: #111;
+}
+
+#CourseList th,
+#CourseList td {
+  height: 13px;
+  line-height: 13px;
+  text-align: left;
+  font-weight: 400;
+}
+
+#CourseList thead tr:first-child th,
+#CourseList thead tr:nth-child(2) th {
+  text-align: center;
+  font-weight: 700;
+}
+
+#CourseList th:first-child,
+#CourseList td:first-child {
+  width: 67%;
+}
+
+#CourseList th:last-child,
+#CourseList td:last-child {
+  width: 33%;
+}
+
+.notifications-panel {
+  margin: 10px 20px;
+  box-sizing: border-box;
+}
+
+.notifications-panel p {
+  margin: 0;
+  font-size: 10px;
+}
+
+.notifications-panel button {
+  float: right;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.notifications-panel button img {
+  width: 10px;
+  height: 10px;
+}
+
+.notifications-panel ul {
+  padding-left: 20px;
+}
