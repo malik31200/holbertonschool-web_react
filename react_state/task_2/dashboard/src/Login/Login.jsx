@@ -6,10 +6,10 @@ class Login extends React.Component {
         super(props);
 
         this.state = {
-            isLoggedIn: false,
-            email: '',
-            password: '',
+            email: props.email || '',
+            password: props.password || '',
             enableSubmit: false
+    };
         };
     }
 
