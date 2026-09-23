@@ -1,7 +1,7 @@
 const user = {
     email: '',
     password: '',
-    isLoggedIN: FontFaceSetLoadEvent
+    isLoggedIN: false
 };
 
 const logout = () => {};
