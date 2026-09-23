@@ -19,7 +19,7 @@
             password: '',
             isLoggedIn: false
           },
-          logout: this.logOut
+          logOut: this.logOut
         };
       
         
