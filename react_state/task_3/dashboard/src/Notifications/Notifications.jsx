@@ -56,7 +56,7 @@ class Notifications extends React.Component {
                                 </p>
 
                                 <ul className="max-[912px]:!list-none max-[912px]:!pl-0">
-                                    {(notifications || []).map((notification) => (
+                                    {notifications.map((notification) => (
                                         <NotificationItem
                                             key={notification.id}
                                             id={notification.id}

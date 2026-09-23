@@ -55,6 +55,10 @@ test('renders CourseList after logging in', () => {
 });
 
 test('logs out when ctrl+h is pressed', () => {
+  const alertMock = jest
+    .spyOn(window, 'alert')
+    .mockImplementation(() => {});
+
   render(<App />);
 
   fireEvent.change(screen.getByLabelText(/email/i), {
@@ -79,6 +83,8 @@ test('logs out when ctrl+h is pressed', () => {
   expect(
     screen.getByText(/Login to access the full dashboard/i)
   ).toBeInTheDocument();
+
+  alertMock.mockRestore();
 });
 
 test('displays alert when ctrl+h is pressed', () => {
