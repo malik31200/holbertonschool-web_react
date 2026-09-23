@@ -12,8 +12,6 @@
         constructor(props) {
           super(props);
 
-          this.logOut = this.logOut.bind(this);
-
           this.state = {
             displayDrawer: false,
             user: {
