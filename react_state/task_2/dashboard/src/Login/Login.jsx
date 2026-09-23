@@ -9,7 +9,6 @@ class Login extends React.Component {
             email: props.email || '',
             password: props.password || '',
             enableSubmit: false
-    };
         };
     }
 
