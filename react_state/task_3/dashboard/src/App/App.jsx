@@ -112,7 +112,11 @@
         render () {
           return (
             <newContext.Provider
-              value={this.state}
+              value={{
+                user: this.state.user,
+                logIn: this.logIn,
+                logOut: this.logOut
+              }}
             >
               <div className='App flex min-h-screen flex-col box-border px-4 sm:px-8 lg:px-[4%]'>
                 <Fragment>

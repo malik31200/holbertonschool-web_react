@@ -16,9 +16,7 @@ class Login extends React.Component {
     handleLoginSubmit = (event) => {
         event.preventDefault();
 
-        this.setState({
-            isLoggedIn: true
-        })
+        this.props.logIn(this.state.email, this.state.password);
     };
 
     handleChangeEmail = (event) => {
