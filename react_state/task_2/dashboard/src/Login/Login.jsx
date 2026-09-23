@@ -8,7 +8,9 @@ class Login extends React.Component {
         this.state = {
             email: props.email || '',
             password: props.password || '',
-            enableSubmit: false
+            enableSubmit:
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(props.email || '') &&
+            (props.password || '').length >= 8
         };
     }
 
