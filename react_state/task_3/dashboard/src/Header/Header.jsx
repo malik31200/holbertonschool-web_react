@@ -3,6 +3,7 @@ import React from 'react';
 import newContext from '../Context/context';
 
 class Header extends React.Component {
+    static contextType = newContext;
     render () {
         return (
             <div className='App-header flex min-h-[110px] items-center border-b-[3px] border-[var(--main-color)] px-5 box-border max-[520px]:flex-col max-[520px]:justify-center max-[520px]:py-5'>
@@ -24,7 +25,5 @@ class Header extends React.Component {
         );
     }
 }
-
-Header.contextType = newContext;
 
 export default Header;
