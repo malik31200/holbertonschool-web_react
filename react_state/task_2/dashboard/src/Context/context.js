@@ -1,7 +1,7 @@
 const user = {
     email: '',
     password: '',
-    isLoggedIN: false
+    isLoggedIn: false
 };
 
 const logout = () => {};
