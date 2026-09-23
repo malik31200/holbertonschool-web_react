@@ -12,13 +12,13 @@ class Header extends React.Component {
                 </h1>
 
                 {this.context.user.isLoggedIn && (
-                    <p id='logoutSection'>
+                    <div id='logoutSection'>
                         Welcome {this.context.user.email} (
                             <a href="#logOut" onClick={this.context.logOut}>
                                 logout
                             </a>
                         )
-                    </p>
+                    </div>
                 )}
             </div>
         );
