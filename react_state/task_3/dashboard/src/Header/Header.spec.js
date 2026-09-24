@@ -12,3 +12,9 @@ test('checks that the Header contains the correct heading', () => {
 
   expect(screen.getByRole('heading', { name: /school dashboard/i})).toBeInTheDocument();
 });
+
+test('does not display logout section when user is logged out', () => {
+  render(<Header />);
+
+  expect(screen.queryByText(/logout/i)).not.toBeInTheDocument();
+});
