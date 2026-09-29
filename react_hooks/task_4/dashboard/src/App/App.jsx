@@ -91,7 +91,7 @@ function App() {
           (notification) => notification.id !== id
         )
       );
-  }, []);
+  }, [setNotifications]);
 
   return (
     <newContext.Provider
