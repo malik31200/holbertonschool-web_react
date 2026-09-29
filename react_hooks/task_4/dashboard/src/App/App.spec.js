@@ -87,3 +87,13 @@ test('does not displays New course available and removes notification and logs w
   consoleLogMock.mockRestore();
   
 })
+
+test('markNotificationAsRead keeps the same reference after a re-render', () => {
+  const notifications = screen.queryAllByRole('listitem');
+
+  render(<App />);
+
+  fireEvent.click(screen.getByText(/Your notifications/i));
+
+  expect(screen.getByText(/New course available/i)).toBeInTheDocument();
+});

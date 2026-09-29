@@ -8,8 +8,7 @@ import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBot
 import BodySection from '../BodySection/BodySection';
 import newContext from '../Context/context';
 
-function App() {
-  const notificationsList = [
+const notificationsList = [
     {
       id: 1,
       type: 'default',
@@ -47,6 +46,7 @@ function App() {
     },
   ];
 
+function App() {
   const [displayDrawer, setDisplayDrawer] = useState(true);
 
   const [user, setUser] = useState({
