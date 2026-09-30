@@ -80,11 +80,8 @@ function App() {
   const logIn = useCallback((email, password) => {
     dispatch({
       type: APP_ACTIONS.LOGIN,
-      user: {
-        email,
-        password,
-        isLoggedIn: true,
-      },
+      email,
+      password,
     });
   }, []);
 

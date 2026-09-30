@@ -21,14 +21,14 @@ export const initialState = {
 export function appReducer(state = initialState, action) {
   switch (action.type) {
     case APP_ACTIONS.LOGIN:
-        return {
-            ...state,
-            user: action.user || {
-            email: action.email,
-            password: action.password,
-            isLoggedIn: true,
-            },
-        };
+      return {
+        ...state,
+        user: {
+          email: action.email,
+          password: action.password,
+          isLoggedIn: true,
+        },
+      };
 
     case APP_ACTIONS.LOGOUT:
       return {
