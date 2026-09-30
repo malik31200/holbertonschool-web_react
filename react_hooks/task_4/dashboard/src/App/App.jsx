@@ -28,7 +28,7 @@ function App() {
       try {
         const response = await axios.get('/notifications.json');
         const notifications = [
-          ...response.data,
+          ...(Array.isArray(response.data) ? response.data : []),
           {
             id: 3,
             type: 'urgent',
