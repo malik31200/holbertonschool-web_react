@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import Notifications from '../Notifications/Notifications';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -7,44 +7,8 @@ import CourseList from '../CourseList/CourseList';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from '../BodySection/BodySection';
 import newContext from '../Context/context';
-
-const notificationsList = [
-    {
-      id: 1,
-      type: 'default',
-      value: 'New course available',
-    },
-    {
-      id: 2,
-      type: 'urgent',
-      value: 'New resume available',
-    },
-    {
-      id: 3,
-      type: 'urgent',
-      html: {
-        __html: '<strong>Urgent requirement</strong> - complete by EOD',
-      }
-    },
-  ];
-
-  const coursesList = [
-    {
-      id: 1,
-      name: 'ES6',
-      credit: 60,
-    },
-    {
-      id: 2,
-      name: 'Webpack',
-      credit: 20,
-    },
-    {
-      id: 3,
-      name: 'React',
-      credit: 40,
-    },
-  ];
+import axios from 'axios';
+import { getLatestNotification } from '../utils/utils';
 
 function App() {
   const [displayDrawer, setDisplayDrawer] = useState(true);
@@ -55,7 +19,44 @@ function App() {
     isLoggedIn: false
   });
 
-  const [notifications, setNotifications] = useState(notificationsList);
+  const [notifications, setNotifications] = useState([]);
+
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get('/notifications.json');
+        const notifications = [
+          ...response.data,
+          {
+            id: 3,
+            type: 'urgent',
+            html: {
+              __html: getLatestNotification(),
+            }
+          }
+        ]
+        setNotifications(notifications);
+      } catch (error) {
+          console.error(error);
+      }
+    };
+
+    fetchNotifications();  
+  }, []);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get('/courses.json');
+        setCourses(response.data);
+      } catch (error) {
+          console.error(error);
+      }
+    };
+    fetchCourses();
+  }, [user]);
 
   const handleDisplayDrawer = useCallback(() => {
     setDisplayDrawer(true);
@@ -118,7 +119,7 @@ function App() {
 
           {user.isLoggedIn ? (
             <BodySectionWithMarginBottom title="Course list">
-              <CourseList courses={coursesList} />
+              <CourseList courses={courses} />
             </BodySectionWithMarginBottom>
           ) : (
             <BodySectionWithMarginBottom title="Log in to continue">

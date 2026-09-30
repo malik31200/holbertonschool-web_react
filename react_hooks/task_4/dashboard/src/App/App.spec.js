@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App.jsx';
+import mockAxios from 'jest-mock-axios';
 
 test('renders 2 input elements', () => {
   render(<App />);
@@ -71,10 +72,55 @@ test('displays the school news by default', () => {
 });
 
 
-test('does not displays New course available and removes notification and logs when it is clicked', () => {
+test('does not displays New course available and removes notification and logs when it is clicked', async () => {
   const consoleLogMock = jest.spyOn(console, 'log').mockImplementation(() => {});
 
   render(<App />);
+
+  mockAxios.mockResponseFor(
+    { url: '/notifications.json' },
+    {
+      data: [
+        {
+          id: 1,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+      ],
+    }
+  );
+
+  mockAxios.mockResponseFor(
+    { url: '/courses.json' },
+    {
+      data: [
+        {
+          id: 1,
+          name: 'ES6',
+          credit: 60,
+        },
+        {
+          id: 2,
+          name: 'Webpack',
+          credit: 20,
+        },
+        {
+          id: 3,
+          name: 'React',
+          credit: 40,
+        },
+      ],
+    }
+  );
+
+  await waitFor(() => {
+    expect(screen.getByText(/New course available/i)).toBeInTheDocument();
+  });
 
   fireEvent.click(screen.getByText(/Your notifications/i));
   fireEvent.click(screen.getByText(/New course available/i));
@@ -88,12 +134,33 @@ test('does not displays New course available and removes notification and logs w
   
 })
 
-test('markNotificationAsRead keeps the same reference after a re-render', () => {
-  const notifications = screen.queryAllByRole('listitem');
+test('markNotificationAsRead keeps the same reference after a re-render', async () => {
 
   render(<App />);
 
+  mockAxios.mockResponseFor(
+    { url: '/notifications.json' },
+    {
+      data: [
+        {
+          id: 1,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+      ],
+    }
+  );
+
   fireEvent.click(screen.getByText(/Your notifications/i));
 
-  expect(screen.getByText(/New course available/i)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(
+      screen.getByText(/New course available/i)
+    ).toBeInTheDocument();
+  });
 });
