@@ -1,0 +1,165 @@
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import App from './App.jsx';
+import mockAxios from 'jest-mock-axios';
+
+test('renders 2 input elements', () => {
+  render(<App />);
+
+  expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+});
+
+test('renders Email and Password label', () => {
+  render(<App />);
+
+  expect(
+    screen.getByText(/email/i, { selector: 'label' })
+  ).toBeInTheDocument();
+
+  expect(
+    screen.getByText(/password/i, { selector: 'label' })
+  ).toBeInTheDocument();
+});
+
+test('renders OK button', () => {
+  render(<App />);
+
+  expect(
+    screen.getByRole('button', { name: /ok/i })
+  ).toBeInTheDocument();
+});
+
+test('renders Login when user is not logged in', () => {
+  render(<App />);
+
+  expect(
+    screen.getByText(/Login to access the full dashboard/i)
+  ).toBeInTheDocument();
+});
+
+test('renders CourseList after logging in', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByLabelText(/email/i), {
+    target: { value: 'test@example.com' },
+  });
+
+  fireEvent.change(screen.getByLabelText(/password/i), {
+    target: { value: '12345678' },
+  });
+
+  fireEvent.click(
+    screen.getByRole('button', { name: /ok/i })
+  );
+
+  expect(screen.getByRole('table')).toBeInTheDocument();
+});
+
+test('displays the school news by default', () => {
+  render(<App />);
+
+  expect(
+    screen.getByRole('heading', {
+      name: /News from the School/i,
+    })
+  ).toBeInTheDocument();
+
+  expect(
+    screen.getByText(
+      /Lorem ipsum dolor sit amet consectetur/i
+    )
+  ).toBeInTheDocument();
+});
+
+
+test('does not displays New course available and removes notification and logs when it is clicked', async () => {
+  const consoleLogMock = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+  render(<App />);
+
+  mockAxios.mockResponseFor(
+    { url: '/notifications.json' },
+    {
+      data: [
+        {
+          id: 1,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+      ],
+    }
+  );
+
+  mockAxios.mockResponseFor(
+    { url: '/courses.json' },
+    {
+      data: [
+        {
+          id: 1,
+          name: 'ES6',
+          credit: 60,
+        },
+        {
+          id: 2,
+          name: 'Webpack',
+          credit: 20,
+        },
+        {
+          id: 3,
+          name: 'React',
+          credit: 40,
+        },
+      ],
+    }
+  );
+
+  await waitFor(() => {
+    expect(screen.getByText(/New course available/i)).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByText(/Your notifications/i));
+  fireEvent.click(screen.getByText(/New course available/i));
+
+  expect(screen.queryByText(/New course available/i)).toBeNull();
+  expect(consoleLogMock).toHaveBeenCalledWith(
+    'Notification 1 has been marked as read'
+  );
+
+  consoleLogMock.mockRestore();
+  
+})
+
+test('markNotificationAsRead keeps the same reference after a re-render', async () => {
+  render(<App />);
+
+  mockAxios.mockResponseFor(
+    { url: '/notifications.json' },
+    {
+      data: [
+        {
+          id: 1,
+          type: 'default',
+          value: 'New course available',
+        },
+        {
+          id: 2,
+          type: 'urgent',
+          value: 'New resume available',
+        },
+      ],
+    }
+  );
+
+  fireEvent.click(screen.getByText(/Your notifications/i));
+
+  await waitFor(() => {
+    expect(
+      screen.getByText(/New course available/i)
+    ).toBeInTheDocument();
+  });
+});
