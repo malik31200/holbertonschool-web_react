@@ -26,9 +26,9 @@ function App() {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get('http://localhost:5173/notifications.json');
+        const response = await axios.get('/notifications.json');
         const notifications = [
-          ...(Array.isArray(response.data) ? response.data : []),
+          ...response.data,
           {
             id: 3,
             type: 'urgent',
@@ -49,7 +49,7 @@ function App() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('http://localhost:5173/courses.json');
+        const response = await axios.get('/courses.json');
         setCourses(response.data);
       } catch (error) {
           console.error(error);

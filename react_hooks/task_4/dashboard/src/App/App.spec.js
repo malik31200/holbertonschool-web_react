@@ -78,7 +78,7 @@ test('does not displays New course available and removes notification and logs w
   render(<App />);
 
   mockAxios.mockResponseFor(
-    { url: 'http://localhost:5173/notifications.json' },
+    { url: '/notifications.json' },
     {
       data: [
         {
@@ -96,7 +96,7 @@ test('does not displays New course available and removes notification and logs w
   );
 
   mockAxios.mockResponseFor(
-    { url: 'http://localhost:5173/courses.json' },
+    { url: '/courses.json' },
     {
       data: [
         {
@@ -138,7 +138,7 @@ test('markNotificationAsRead keeps the same reference after a re-render', async 
   render(<App />);
 
   mockAxios.mockResponseFor(
-    { url: 'http://localhost:5173/notifications.json' },
+    { url: '/notifications.json' },
     {
       data: [
         {
