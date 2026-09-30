@@ -23,20 +23,22 @@ export function appReducer(state = initialState, action) {
     case APP_ACTIONS.LOGIN:
         return {
             ...state,
-            user: {
-            ...action.user,
+            user: action.user || {
+            email: action.email,
+            password: action.password,
             isLoggedIn: true,
             },
         };
 
-        case APP_ACTIONS.LOGOUT:
-        return {
-            ...state,
-            user: {
-            ...state.user,
-            isLoggedIn: false,
-            },
-        };
+    case APP_ACTIONS.LOGOUT:
+      return {
+        ...state,
+        user: {
+          email: '',
+          password: '',
+          isLoggedIn: false,
+        },
+      };
 
     case APP_ACTIONS.TOGGLE_DRAWER:
       return {
