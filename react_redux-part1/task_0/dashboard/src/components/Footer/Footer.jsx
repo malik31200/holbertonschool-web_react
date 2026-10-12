@@ -1,5 +1,5 @@
-import { getCurrentYear, getFooterCopy } from '../utils/utils';
-import newContext from '../Context/context';
+import { getCurrentYear, getFooterCopy } from '../../utils/utils';
+import newContext from '../../Context/context';
 
 function Footer() {
     return (

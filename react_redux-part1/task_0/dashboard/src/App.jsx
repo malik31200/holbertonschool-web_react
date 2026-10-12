@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react';
-import Notifications from '../Notifications/Notifications';
-import Header from '../Header/Header';
-import Login from '../Login/Login';
-import Footer from '../Footer/Footer';
-import CourseList from '../CourseList/CourseList';
-import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
-import BodySection from '../BodySection/BodySection';
-import newContext from '../Context/context';
+
+import Notifications from './components/Notifications/Notifications';
+import Header from './components/Header/Header';
+import Login from './pages/Login/Login';
+import Footer from './components/Footer/Footer';
+import CourseList from './pages/CourseList/CourseList';
+
+import BodySectionWithMarginBottom from './components/BodySectionWithMarginBottom/BodySectionWithMarginBottom';
+import BodySection from './components/BodySection/BodySection';
+import newContext from './Context/context';
 
 class App extends React.Component {
   constructor(props) {

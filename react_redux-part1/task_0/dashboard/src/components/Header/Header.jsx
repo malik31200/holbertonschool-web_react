@@ -1,4 +1,4 @@
-import logo from '../assets/holberton-logo.jpg';
+import logo from '../../assets/holberton-logo.jpg';
 import React from 'react';
 import newContext from '../../Context/context';
 

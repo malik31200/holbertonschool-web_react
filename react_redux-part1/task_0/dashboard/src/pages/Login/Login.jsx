@@ -1,5 +1,5 @@
 import React from 'react';
-import WithLogging from '../HOC/WithLogging';
+import WithLogging from "../../components/HOC/WithLogging";
 
 class Login extends React.Component {
   constructor(props) {

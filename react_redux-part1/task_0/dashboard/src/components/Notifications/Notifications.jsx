@@ -1,6 +1,6 @@
 import React from 'react';
-import NotificationItem from './NotificationItem';
-import closeIcon from '../assets/close-button.png';
+import NotificationItem from "../NotificationItem/NotificationItem";
+import closeIcon from '../../assets/close-icon.png';
 
 class Notifications extends React.PureComponent {
     render() {
