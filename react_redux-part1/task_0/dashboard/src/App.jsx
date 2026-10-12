@@ -1,173 +1,136 @@
-import React, { Fragment } from 'react';
-
+import { useEffect, useReducer, useCallback } from 'react';
+import axios from 'axios';
+import { StyleSheet, css } from 'aphrodite';
 import Notifications from './components/Notifications/Notifications';
+import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import Login from './pages/Login/Login';
-import Footer from './components/Footer/Footer';
 import CourseList from './pages/CourseList/CourseList';
-
+import { getLatestNotification } from './utils/utils';
 import BodySectionWithMarginBottom from './components/BodySectionWithMarginBottom/BodySectionWithMarginBottom';
 import BodySection from './components/BodySection/BodySection';
-import newContext from './Context/context';
+import { appReducer, initialState, APP_ACTIONS } from './appReducer';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+const API_BASE_URL = 'http://localhost:5173';
+const ENDPOINTS = {
+  courses: `${API_BASE_URL}/courses.json`,
+  notifications: `${API_BASE_URL}/notifications.json`,
+};
 
-    this.notificationsList = [
-      {
-        id: 1,
-        type: 'default',
-        value: 'New course available',
-      },
-      {
-        id: 2,
-        type: 'urgent',
-        value: 'New resume available',
-      },
-      {
-        id: 3,
-        type: 'urgent',
-        html: {
-          __html: '<strong>Urgent requirement</strong> - complete by EOD',
+const styles = StyleSheet.create({
+  app: {
+    position: 'relative'
+  }
+});
+
+export default function App() {
+  const [state, dispatch] = useReducer(appReducer, initialState);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get(ENDPOINTS.notifications);
+        const latestNotif = {
+          id: 3,
+          type: "urgent",
+          html: { __html: getLatestNotification() }
+        };
+
+        const currentNotifications = response.data.notifications;
+        const indexToReplace = currentNotifications.findIndex(
+          notification => notification.id === 3
+        );
+
+        const updatedNotifications = [...currentNotifications];
+        if (indexToReplace !== -1) {
+          updatedNotifications[indexToReplace] = latestNotif;
+        } else {
+          updatedNotifications.push(latestNotif);
         }
-      },
-    ];
 
-    this.coursesList = [
-      {
-        id: 1,
-        name: 'ES6',
-        credit: 60,
-      },
-      {
-        id: 2,
-        name: 'Webpack',
-        credit: 20,
-      },
-      {
-        id: 3,
-        name: 'React',
-        credit: 40,
-      },
-    ];
-
-    this.state = {
-      displayDrawer: false,
-      user: {
-        email: '',
-        password: '',
-        isLoggedIn: false
-      },
-      logOut: this.logOut,
-      notifications: this.notificationsList,
-      courses: this.coursesList
+        dispatch({ type: APP_ACTIONS.SET_NOTIFICATIONS, payload: updatedNotifications });
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
     };
 
-  }
+    fetchNotifications();
+  }, []);
 
-  handleDisplayDrawer = () => {
-    this.setState({
-      displayDrawer: true
-    });
-  };
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get(ENDPOINTS.courses);
+        dispatch({ type: APP_ACTIONS.SET_COURSES, payload: response.data.courses });
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      }
+    };
 
-  handleHideDrawer = () => {
-    this.setState({
-      displayDrawer: false
-    });
-  };
-
-  handleKeyDown = (event) => {
-    if (event.ctrlKey && event.key === 'h') {
-      alert('Logging you out');
-      this.logOut();
+    if (!state.user.isLoggedIn) {
+      dispatch({ type: APP_ACTIONS.SET_COURSES, payload: [] });
+      return;
     }
-  };
 
-  logIn = (email, password) => {
-    this.setState({
-      user: {
-        email: email,
-        password: password,
-        isLoggedIn: true
-      }
+    fetchCourses();
+  }, [state.user.isLoggedIn]);
+
+  const handleDisplayDrawer = useCallback(() => {
+    dispatch({ type: APP_ACTIONS.TOGGLE_DRAWER });
+  }, []);
+
+  const handleHideDrawer = useCallback(() => {
+    dispatch({ type: APP_ACTIONS.TOGGLE_DRAWER });
+  }, []);
+
+  const logIn = (email, password) => {
+    dispatch({
+      type: APP_ACTIONS.LOGIN,
+      payload: { email, password }
     });
   };
 
-  logOut = () => {
-    this.setState({
-      user: {
-        email: '',
-        password: '',
-        isLoggedIn: false
-      }
-    });
+  const logOut = () => {
+    dispatch({ type: APP_ACTIONS.LOGOUT });
   };
 
-  markNotificationAsRead = (id) => {
+  const markNotificationAsRead = useCallback((id) => {
+    dispatch({
+      type: APP_ACTIONS.MARK_NOTIFICATION_READ,
+      payload: id
+    });
     console.log(`Notification ${id} has been marked as read`);
+  }, []);
 
-    this.setState((prevState) => ({
-      notifications: prevState.notifications.filter(
-        (notification) => notification.id !== id
-      )
-    }));
-  };
-
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
-
-  render() {
-    return (
-      <newContext.Provider value={this.state}>
-        <div className='App flex min-h-screen flex-col box-border px-4 sm:px-8 lg:px-[4%]'>
-          <Fragment>
-            <Notifications
-              notifications={this.state.notifications}
-              displayDrawer={this.state.displayDrawer}
-              handleDisplayDrawer={this.handleDisplayDrawer}
-              handleHideDrawer={this.handleHideDrawer}
-              markNotificationAsRead={this.markNotificationAsRead}
+  return (
+    <div className={css(styles.app)}>
+      <Notifications
+        notifications={state.notifications}
+        handleHideDrawer={handleHideDrawer}
+        handleDisplayDrawer={handleDisplayDrawer}
+        displayDrawer={state.displayDrawer}
+        markNotificationAsRead={markNotificationAsRead}
+      />
+      <>
+        <Header user={state.user} logOut={logOut} />
+        {!state.user.isLoggedIn ? (
+          <BodySectionWithMarginBottom title='Log in to continue'>
+            <Login
+              logIn={logIn}
+              email={state.user.email}
+              password={state.user.password}
             />
-
-            <Header />
-
-            {this.state.user.isLoggedIn ? (
-              <BodySectionWithMarginBottom title="Course list">
-                <CourseList courses={this.state.courses} />
-              </BodySectionWithMarginBottom>
-            ) : (
-              <BodySectionWithMarginBottom title="Log in to continue">
-                <Login
-                  logIn={this.logIn}
-                  email={this.state.user.email}
-                  password={this.state.user.password}
-                />
-              </BodySectionWithMarginBottom>
-            )}
-
-            <BodySection title="News from the School">
-              <p>
-                ipsum Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Similique, asperiores architecto
-                blanditiis fuga doloribus sit illum aliquid ea
-                distinctio minus accusantium, impedit quo voluptatibus
-                ut magni dicta. Recusandae, quia dicta?
-              </p>
-            </BodySection>
-
-            <Footer />
-          </Fragment>
-        </div>
-      </newContext.Provider>
-    );
-  }
+          </BodySectionWithMarginBottom>
+        ) : (
+          <BodySectionWithMarginBottom title='Course list'>
+            <CourseList courses={state.courses} />
+          </BodySectionWithMarginBottom>
+        )}
+        <BodySection title="News from the School">
+          <p>Holberton School news goes here</p>
+        </BodySection>
+      </>
+      <Footer user={state.user} />
+    </div>
+  );
 }
-
-export default App;

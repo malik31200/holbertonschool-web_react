@@ -1,29 +1,41 @@
-import logo from '../../assets/holberton-logo.jpg';
-import React from 'react';
-import newContext from '../../Context/context';
+import logo from "../../assets/holberton-logo.jpg";
+import { StyleSheet, css } from "aphrodite";
 
-class Header extends React.Component {
-    static contextType = newContext;
-    render () {
-        return (
-            <div className='App-header flex min-h-[110px] items-center border-b-[3px] border-[var(--main-color)] px-5 box-border max-[520px]:flex-col max-[520px]:justify-center max-[520px]:py-5'>
-                <img src={logo} alt="holberton logo" className="w-[130px] h-auto" />
-                <h1 className='ml-[25px] text-[28px] text-[var(--main-color)] max-[520px]:ml-0 max-[520px]:mt-2 max-[520px]:text-center max-[520px]:text-[24px]'>
-                    School Dashboard
-                </h1>
+const styles = StyleSheet.create({
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  logo: {
+    height: "30vmin",
+    pointerEvents: "none",
+  },
+  h1: {
+    color: "#e1003c",
+    fontFamily: "Roboto, sans-serif",
+    fontWeight: "bold",
+    fontSize: "2.5rem",
+    margin: 0,
+  },
+  a: {
+    fontFamily: "Roboto, sans-serif",
+    fontSize: "1.2rem",
+    marginLeft: "auto",
+    cursor: "pointer",
+  },
+});
 
-                {this.context.user.isLoggedIn && (
-                    <div id='logoutSection'>
-                        Welcome {this.context.user.email} (
-                            <a href="#logOut" onClick={this.context.logOut}>
-                                logout
-                            </a>
-                        )
-                    </div>
-                )}
-            </div>
-        );
-    }
+export default function Header({ user, logOut }) {
+  return (
+    <div className={css(styles.header)}>
+      <img src={logo} className={css(styles.logo)} alt="holberton logo" />
+      <h1 className={css(styles.h1)}>School Dashboard</h1>
+      {user.isLoggedIn ? (
+        <div id="logoutSection" className={css(styles.logoutSection)}>
+          Welcome <b>{user.email}</b> <a className={css(styles.a)} href="#" onClick={logOut}>(logout)</a>
+        </div>
+      ) : null}
+    </div>
+  );
 }
-
-export default Header;

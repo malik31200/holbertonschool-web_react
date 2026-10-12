@@ -1,43 +1,59 @@
-import React from 'react';
+import { memo } from "react";
+import { StyleSheet, css } from "aphrodite";
 
-class NotificationItem extends React.PureComponent {
-    render() {
-        const {
-            id,
-            type,
-            html,
-            value,
-            markAsRead,
-        } = this.props;
+const styles = StyleSheet.create({
+  default: {
+    color: "blue",
+    "@media (max-width: 900px)": {
+      width: "100%",
+      borderBottom: "1px solid black",
+      fontSize: "20px",
+      padding: "10px 8px",
+      listStyle: "none",
+    },
+  },
+  urgent: {
+    color: "red",
+    "@media (max-width: 900px)": {
+      width: "100%",
+      borderBottom: "1px solid black",
+      fontSize: "20px",
+      padding: "10px 8px",
+      listStyle: "none",
+    },
+  },
+});
 
-        const colorClass =
-            type === 'default'
-                ? 'text-[var(--default-notification-item)]'
-                : 'text-[var(--urgent-notification-item)]';
-
-        const responsiveClass = 'max-[912px]:!text-base max-[912px]:border-b max-[912px]:border-gray-300 max-[912px]:py-3 max-[912px]:px-1';
-
-        if (html) {
-            return (
-                <li
-                    data-notification-type={type}
-                    className={`${colorClass} ${responsiveClass}`}
-                    dangerouslySetInnerHTML={html}
-                    onClick={() => markAsRead(id)}
-                />
-            );
-        }
-
-        return (
-            <li
-                data-notification-type={type}
-                className={`${colorClass} ${responsiveClass}`}
-                onClick={() => markAsRead(id)}
-            >
-                {value}
-            </li>
-        );
-    }
-}
+const NotificationItem = memo(function NotificationItem({
+  type,
+  html,
+  value,
+  markAsRead,
+  id,
+}) {
+  const itemStyle = type === "default" ? styles.default : styles.urgent;
+  // this console.log is only for test purposes and not mentionned/required in the student code
+  // console.log(`Rendering NotificationItem with id: ${id}, type: ${type}, value: ${value}`);
+  if (html !== undefined) {
+    return (
+      <li
+        className={css(itemStyle)}
+        data-notification-type={type}
+        dangerouslySetInnerHTML={html}
+        onClick={() => markAsRead(id)}
+      ></li>
+    );
+  } else {
+    return (
+      <li
+        className={css(itemStyle)}
+        data-notification-type={type}
+        onClick={() => markAsRead(id)}
+      >
+        {value}
+      </li>
+    );
+  }
+});
 
 export default NotificationItem;

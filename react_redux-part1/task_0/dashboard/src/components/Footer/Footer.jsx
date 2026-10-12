@@ -1,24 +1,35 @@
-import { getCurrentYear, getFooterCopy } from '../../utils/utils';
-import newContext from '../../Context/context';
+import { getCurrentYear, getFooterCopy } from "../../utils/utils";
+import { StyleSheet, css } from "aphrodite";
 
-function Footer() {
-    return (
-        <div className="App-footer mt-auto flex min-h-[55px] items-center justify-center border-t-[3px] border-[var(--main-color)] box-border">
-            <p className="m-0 text-[10px] italic text-[#2d2d2d] max-[520px]:text-xs">
-                Copyright {getCurrentYear()} - {getFooterCopy(true)}
-            </p>
+const styles = StyleSheet.create({
+  footer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderTop: "5px red solid",
+    gap: "10px",
+  },
+  p: {
+    fontFamily: "Roboto, sans-serif",
+    fontStyle: "italic",
+    fontSize: "1.3rem",
+    padding: "0 3px",
+    margin: 0,
+  },
+});
 
-            <newContext.Consumer>
-                {(context) => (
-                    context.user.isLoggedIn && (
-                        <p>
-                            <a href="#contact">Contact us</a>
-                        </p>
-                    )
-                )}
-            </newContext.Consumer>
-        </div>
-    )
+export default function Footer({ user }) {
+  return user ? (
+    <div className={css(styles.footer)}>
+      <p className={css(styles.p)}>
+        Copyright {getCurrentYear()} - {getFooterCopy(true)}
+      </p>
+      {user.isLoggedIn && (
+        <span className={css(styles.p)}>
+          <a href="#">Contact us</a>
+        </span>
+      )}
+    </div>
+  ) : null;
 }
-
-export default Footer;

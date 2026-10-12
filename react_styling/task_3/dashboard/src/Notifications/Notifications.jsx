@@ -8,14 +8,16 @@ class Notifications extends React.Component {
     };
 
     shouldComponentUpdate(nextProps) {
-        return nextProps.notifications.length !== this.props.notifications.length;
+        return (nextProps.notifications?.length ?? 0) !== (this.props.notifications?.length ?? 0);
     }
 
     render() {
         const {
-            notifications = [],
+            notifications,
             displayDrawer = true,
         } = this.props;
+
+        const hasNoNotifications = Array.isArray(notifications) && notifications.length === 0;
 
         return (
             <>
@@ -38,7 +40,7 @@ class Notifications extends React.Component {
                             <img src={closeIcon} alt="close" />
                         </button>
 
-                        {notifications.length === 0 ? (
+                        {hasNoNotifications ? (
                             <p>No new notification for now</p>
                         ) : (
                             <>
@@ -47,7 +49,7 @@ class Notifications extends React.Component {
                                 </p>
 
                                 <ul>
-                                    {notifications.map((notification) => (
+                                    {(notifications || []).map((notification) => (
                                         <NotificationItem
                                             key={notification.id}
                                             id={notification.id}

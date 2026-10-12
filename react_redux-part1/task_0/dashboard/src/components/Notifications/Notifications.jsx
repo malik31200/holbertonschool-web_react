@@ -1,69 +1,139 @@
-import React from 'react';
+import { memo } from "react";
+import { StyleSheet, css } from "aphrodite";
+import closeIcon from "../../assets/close-icon.png";
 import NotificationItem from "../NotificationItem/NotificationItem";
-import closeIcon from '../../assets/close-icon.png';
 
-class Notifications extends React.PureComponent {
-    render() {
-        const {
-            notifications = [],
-            displayDrawer = false,
-        } = this.props;
+const opacityKeyframes = {
+  from: {
+    opacity: 0.5,
+  },
+  to: {
+    opacity: 1,
+  },
+};
 
-        const shouldBounce = notifications.length > 0 && !displayDrawer;
+const bounceKeyframes = {
+  "0%": {
+    transform: "translateY(0px)",
+  },
+  "50%": {
+    transform: "translateY(-5px)",
+  },
+  "100%": {
+    transform: "translateY(5px)",
+  },
+};
 
-        const hasNoNotifications = Array.isArray(notifications) && notifications.length === 0;
+const styles = StyleSheet.create({
+  notificationItems: {
+    position: "relative",
+    border: "3px dotted #e1003c",
+    padding: "5px",
+    fontFamily: "Roboto, sans-serif",
+    width: "25%",
+    float: "right",
+    marginTop: "20px",
+    "@media (max-width: 900px)": {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      border: "none",
+      padding: 0,
+      margin: 0,
+      fontSize: "20px",
+      backgroundColor: "white",
+      zIndex: 1000,
+    },
+  },
+  ul: {
+    "@media (max-width: 900px)": {
+      padding: 0,
+    },
+  },
+  p: {
+    margin: 0,
+    "@media (max-width: 900px)": {
+      fontSize: "20px",
+    },
+  },
+  button: {
+    position: "absolute",
+    cursor: "pointer",
+    right: "calc(0% - 480px)",
+    top: "calc(0% - 480px)",
+    background: "transparent",
+    transform: "scale(0.012)",
+    WebkitTransform: "scale(0.012)",
+    MozTransform: "scale(0.012)",
+    msTransform: "scale(0.012)",
+    OTransform: "scale(0.012)",
+  },
+  menuItem: {
+    float: "right",
+    position: "absolute",
+    right: "10px",
+    top: "-5px",
+    backgroundColor: "#fff8f8",
+    cursor: "pointer",
+    ":hover": {
+      animationName: [opacityKeyframes, bounceKeyframes],
+      animationDuration: "1s, 0.5s",
+      animationIterationCount: "3, 3",
+    },
+  },
+});
 
-        return (
+const Notifications = memo(function Notifications({
+  displayDrawer,
+  handleDisplayDrawer,
+  handleHideDrawer,
+  notifications,
+  markNotificationAsRead,
+}) {
+  return (
+    <>
+      <div
+        className={css(styles.menuItem)}
+        onClick={() => handleDisplayDrawer()}
+      >
+        Your notifications
+      </div>
+      {displayDrawer ? (
+        <div className={css(styles.notificationItems)}>
+          {notifications.length > 0 ? (
             <>
-                <div onClick={this.props.handleDisplayDrawer}
-                    className={`text-right notification-title ${shouldBounce ? 'animate-bounce' : ''}`}
-                >
-                    Your notifications
-                </div>
-
-                {displayDrawer && (
-                    <div className='notifications-panel border border-dashed border-[var(--main-color)] w-1/4 p-[6px] max-[912px]:fixed max-[912px]:inset-0 max-[912px]:z-50 max-[912px]:w-auto max-[912px]:overflow-y-auto max-[912px]:bg-white max-[912px]:p-3'>
-
-                        <button
-                            aria-label='Close'
-                            onClick={this.props.handleHideDrawer}
-                            style={{
-                                float: 'right',
-                                border: 'none',
-                                background: 'none',
-                            }}
-                        >
-                            <img src={closeIcon} alt="close" />
-                        </button>
-
-                        {hasNoNotifications ? (
-                            <p className="max-[912px]:!text-base">No new notification for now</p>
-                        ) : (
-                            <>
-                                <p className="max-[912px]:!text-base">
-                                    Here is the list of notifications
-                                </p>
-
-                                <ul className="max-[912px]:!list-none max-[912px]:!pl-0">
-                                    {notifications.map((notification) => (
-                                        <NotificationItem
-                                            key={notification.id}
-                                            id={notification.id}
-                                            type={notification.type}
-                                            html={notification.html}
-                                            value={notification.value}
-                                            markAsRead={this.props.markNotificationAsRead}
-                                        />
-                                    ))}
-                                </ul>
-                            </>
-                        )}
-
-                    </div>
-                )}
+              <p className={css(styles.p)}>Here is the list of notifications</p>
+              <button
+                onClick={() => handleHideDrawer()}
+                aria-label="Close"
+                className={css(styles.button)}
+              >
+                <img src={closeIcon} alt="close icon" />
+              </button>
+              <ul className={css(styles.ul)}>
+                {notifications.map((notification) => (
+                  <NotificationItem
+                    id={notification.id}
+                    key={notification.id}
+                    type={notification.type}
+                    value={notification.value}
+                    html={notification.html}
+                    markAsRead={markNotificationAsRead}
+                  />
+                ))}
+              </ul>
             </>
-        );
-    }
-}
+          ) : (
+            <p className={css(styles.p)}>No new notifications for now</p>
+          )}
+        </div>
+      ) : (
+        []
+      )}
+    </>
+  );
+});
 
 export default Notifications;
