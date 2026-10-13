@@ -17,11 +17,12 @@ export const fetchNotifications = createAsyncThunk(
     async () => {
         const response = await fetch(ENDPOINTS.notifications);
 
-        const data = await response.json();
+        const responseData = await response.json();
+        const data = responseData.notifications;
 
         const latestNotification = getLatestNotification();
 
-        const updatedData = data.map((notification) => {
+        return data.map((notification) => {
                 if (notification.id === 3) {
                     return {
                         ...notification,
@@ -31,9 +32,8 @@ export const fetchNotifications = createAsyncThunk(
 
             return notification;
         });
-
-        return updatedData;
-});
+    }
+);
 
 const notificationsSlice = createSlice({
     name: 'notifications',
