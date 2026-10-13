@@ -10,7 +10,7 @@ describe('authSlice', () => {
     };
 
     test('returns the correct initial state', () => {
-        expect(reducer(undefined, { type, 'unknown' })).toEqual(initialState);
+        expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
 
     test('updates the states when login is dispatched', () => {
