@@ -21,15 +21,15 @@ export const fetchNotifications = createAsyncThunk(
         const data = responseData.notifications;
 
         return data.map((notification) => {
-                if (notification.id === 3) {
-                    return {
-                        ...notification,
-                        html: {
-                            __html:
-                                geLatestNotification(),
-                        }
-                    };
-                }
+            if (notification.id === 3) {
+                return {
+                    ...notification,
+                    html: {
+                        __html:
+                            geLatestNotification(),
+                    },
+                };
+            }
 
             return notification;
         });
