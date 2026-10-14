@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Login = ({ logIn }) => {
+const Login = () => {
   const dispatch = useDispatch();
 
   const {
