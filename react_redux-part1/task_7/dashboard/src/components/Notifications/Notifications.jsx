@@ -102,7 +102,7 @@ const Notifications = memo(function Notifications() {
     dispatch(hideDrawer());
   };
 
-  const handleMarkNotificationAsRead = () => {
+  const handleMarkNotificationAsRead = (id) => {
     dispatch(markNotificationAsRead(id));
   };
 
