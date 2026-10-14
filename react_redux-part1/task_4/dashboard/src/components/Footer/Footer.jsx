@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 export default function Footer({ user }) {
   const { isLoggedIn } = useSelector((state) => state.auth);
 
-  return user ? (
+  return (
     <div className={css(styles.footer)}>
       <p className={css(styles.p)}>
         Copyright {getCurrentYear()} - {getFooterCopy(true)}
