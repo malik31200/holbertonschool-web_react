@@ -26,7 +26,7 @@ export const fetchNotifications = createAsyncThunk(
                     ...notification,
                     html: {
                         __html:
-                            geLatestNotification(),
+                            getLatestNotification(),
                     },
                 };
             }
