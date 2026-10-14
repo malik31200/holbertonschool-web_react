@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Footer({ user }) {
+export default function Footer() {
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   return (
@@ -34,5 +34,5 @@ export default function Footer({ user }) {
         </span>
       )}
     </div>
-  ) : null;
+  );
 }
