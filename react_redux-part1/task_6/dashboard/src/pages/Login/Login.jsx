@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
 });
 
 const Login = ({ logIn }) => {
+  const dispatch = useDispatch();
+
   const {
     email,
     password,
