@@ -16,9 +16,8 @@ export const fetchCourses = createAsyncThunk(
     'courses/fetchCourses',
     async () => {
         const response = await axios.get(ENDPOINTS.courses);
-        const data = await response.json();
 
-        return data.courses;
+        return response.data.courses;
     }
 );
 
