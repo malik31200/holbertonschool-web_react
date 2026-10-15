@@ -2,7 +2,11 @@ import { memo } from "react";
 import { StyleSheet, css } from "aphrodite";
 import closeIcon from "../../assets/close-icon.png";
 import NotificationItem from "../NotificationItem/NotificationItem";
-import { markNotificationAsRead, showDrawer, hideDrawer } from '../../features/notifications/notificationsSlice';
+import {
+  markNotificationAsRead,
+  showDrawer,
+  hideDrawer
+} from '../../features/notifications/notificationsSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 const opacityKeyframes = {

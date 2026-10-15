@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { getLatestNotification } from '../../utils/utils';
 
 const initialState = {
@@ -15,10 +16,9 @@ const ENDPOINTS = {
 export const fetchNotifications = createAsyncThunk(
     'notifications/fetchNotifications',
     async () => {
-        const response = await fetch(ENDPOINTS.notifications);
+        const response = await axios.get(ENDPOINTS.notifications);
 
-        const responseData = await response.json();
-        const data = responseData.notifications;
+        const data = response.data.notifications;
 
         return data.map((notification) => {
             if (notification.id === 3) {
@@ -41,7 +41,7 @@ const notificationsSlice = createSlice({
     initialState,
     reducers: {
         markNotificationAsRead: (state, action) => {
-            const { id } = action.payload;
+            const id = action.payload;
 
             console.log(id);
 
