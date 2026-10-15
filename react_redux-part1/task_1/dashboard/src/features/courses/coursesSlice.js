@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from 'axios';
 import { logout } from '../auth/authSlice';
 
 const initialState = {
@@ -14,7 +15,7 @@ const ENDPOINTS = {
 export const fetchCourses = createAsyncThunk(
     'courses/fetchCourses',
     async () => {
-        const response = await fetch(ENDPOINTS.courses);
+        const response = await axios.get(ENDPOINTS.courses);
         const data = await response.json();
 
         return data.courses;
