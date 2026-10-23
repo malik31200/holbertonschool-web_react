@@ -8,11 +8,15 @@ export const getFilteredNotifications = createSelector(
         (state, filter) => filter,
     ],
     (notifications, filter) => {
+        const unreadNotifications = notifications.filter(
+            (notification) => notification.isRead !== true
+        );
+
         if (filter === 'all') {
-            return notifications;
+            return unreadNotifications;
         }
 
-        return notifications.filter(
+        return unreadNotifications.filter(
             (notification) => notification.type === filter
         );
     }
